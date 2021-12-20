@@ -1,5 +1,6 @@
 import pygame
-from typing import List
+from pygame.font import SysFont
+from typing import List, Tuple
 import math
 
 
@@ -9,22 +10,22 @@ class DrawInformation:
     It contains attributes necessary for drawing the window
     """
     pygame.init()
-    BLACK = 0, 0, 0
-    WHITE = 255, 255, 255
-    GREEN = 0, 255, 0
-    RED = 255, 0, 0
-    BLUE = 0,0,255
-    BACKGROUND_COLOR = BLACK
-    SIDE_PAD = 100
-    TOP_PAD = 150
+    BLACK: Tuple[int, int, int] = 0, 0, 0
+    WHITE: Tuple[int, int, int] = 255, 255, 255
+    GREEN: Tuple[int, int, int] = 0, 255, 0
+    RED: Tuple[int, int, int] = 255, 0, 0
+    BLUE: Tuple[int, int, int] = 0, 0, 255
+    BACKGROUND_COLOR: Tuple[int, int, int] = BLACK
+    SIDE_PAD: int = 100
+    TOP_PAD: int = 150
 
-    GRADIENTS = [
+    GRADIENTS: List[Tuple[int, int, int]] = [
         (128, 128, 128),
         (160, 160, 160),
         (192, 192, 192)
     ]
-    FONT = pygame.font.SysFont(None, 30)
-    LARGE_FONT = pygame.font.SysFont(None, 40)
+    FONT: SysFont = pygame.font.SysFont(None, 30)
+    LARGE_FONT: SysFont = pygame.font.SysFont(None, 40)
 
     def __init__(self, width: int, height: int, array: List[int]):
         # Attributes will be set in set_list
@@ -35,8 +36,8 @@ class DrawInformation:
         self.min_val = None
         self.array = None
         # Set width and height of window
-        self.width = width
-        self.height = height
+        self.width: int = width
+        self.height: int = height
 
         self.window = pygame.display.set_mode((width, height))
         pygame.display.set_caption("Sorting Algorithm Visualizer by Datthew Nguyen")
@@ -52,6 +53,6 @@ class DrawInformation:
         self.array: List[int] = array
         self.min_val: int = min(array)
         self.max_val: int = max(array)
-        self.block_width = round((self.width - self.SIDE_PAD) / len(array))
-        self.block_height = math.floor((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
-        self.start_x = self.SIDE_PAD // 2
+        self.block_width: int = round((self.width - self.SIDE_PAD) / len(array))
+        self.block_height: int = math.floor((self.height - self.TOP_PAD) / (self.max_val - self.min_val))
+        self.start_x: int = self.SIDE_PAD // 2
