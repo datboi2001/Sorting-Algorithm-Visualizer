@@ -19,6 +19,24 @@ def generate_starting_list(n: int, min_val: int, max_val: int) -> List[int]:
     return array
 
 
+def blit_text(surface, text, pos, font, color=pygame.Color('white')):
+    words = [word.split(" ") for word in text.splitlines()]  # 2D array where each row is a list of words.
+    space = font.size(' ')[0]  # The width of a space.
+    max_width, max_height = surface.get_size()
+    x, y = pos
+    for line in words:
+        for word in line:
+            word_surface = font.render(word, 0, color)
+            word_width, word_height = word_surface.get_size()
+            if x + word_width >= max_width:
+                x = pos[0]  # Reset the x.
+                y += word_height  # Start on new row.
+            surface.blit(word_surface, (x, y))
+            x += word_width + space
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
+
+
 def draw(draw_info: DrawInformation, algo_name: str, ascending: bool, fps: int) -> None:
     """
     Draw the window using the draw_info object
@@ -30,21 +48,16 @@ def draw(draw_info: DrawInformation, algo_name: str, ascending: bool, fps: int) 
     """
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
 
-    title = draw_info.LARGE_FONT.render(f"{algo_name} - {'Ascending' if ascending else 'Descending'} at {fps} FPS", 1,
+    title = draw_info.LARGE_FONT.render(f"{algo_name} - {'Ascending' if ascending else 'Descending'} at {fps} FPS"
+                                        f" with array of size {len(draw_info.array)}", 1,
                                         draw_info.RED)
     draw_info.window.blit(title, (draw_info.width / 2 - title.get_width() / 2, 5))
 
-    controls = draw_info.FONT.render("R: RESET | SPACE: START_SORTING | A: ASCENDING | D: DESCENDING", 1,
-                                     draw_info.WHITE)
-    draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 45))
-
-    controls = draw_info.FONT.render("->: INCREASE SPEED | <-: DECREASE SPEED", 1,
-                                     draw_info.WHITE)
-    draw_info.window.blit(controls, (draw_info.width / 2 - controls.get_width() / 2, 75))
-
-    sorting = draw_info.FONT.render("I: INSERTION SORT | B: BUBBLE SORT | M: MERGE SORT | Q: QUICK SORT ", 1,
-                                    draw_info.WHITE)
-    draw_info.window.blit(sorting, (draw_info.width / 2 - sorting.get_width() / 2, 105))
+    text = "R: RESET | SPACE: START_SORTING | A: ASCENDING | D: DESCENDING |" \
+           " Right arrow: Increase speed | Left arrow: Decrease speed |" \
+            " Up arrow: Increase size| Down arrow: Decrease size" \
+           " I: INSERTION SORT | B: BUBBLE SORT | M: MERGE SORT | Q: QUICK SORT"
+    blit_text(draw_info.window, text, (35, 55), draw_info.FONT)
     draw_list(draw_info)
     pygame.display.update()
 
