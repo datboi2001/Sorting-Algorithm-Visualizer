@@ -55,8 +55,8 @@ def draw(draw_info: DrawInformation, algo_name: str, ascending: bool, fps: int) 
 
     text = "R: RESET | SPACE: START_SORTING | A: ASCENDING | D: DESCENDING |" \
            " Right arrow: Increase speed | Left arrow: Decrease speed |" \
-            " Up arrow: Increase size| Down arrow: Decrease size" \
-           " I: INSERTION SORT | B: BUBBLE SORT | M: MERGE SORT | Q: QUICK SORT"
+            " Up arrow: Increase size| Down arrow: Decrease size |" \
+           " W: Next Algorithm | S: Previous Algorithm"
     blit_text(draw_info.window, text, (35, 55), draw_info.FONT)
     draw_list(draw_info)
     pygame.display.update()
