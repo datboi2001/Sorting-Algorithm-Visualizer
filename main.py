@@ -2,7 +2,7 @@ import pygame
 
 from DrawInformation import DrawInformation
 from utilities import draw_list, draw, generate_starting_list
-import sorting_algorithms
+import sorting_algorithms as sa
 
 def main():
     """
@@ -20,8 +20,14 @@ def main():
     sorting = False
     ascending = True
 
-    sorting_algorithm = sorting_algorithms.bubble_sort
-    sorting_algo_name = "Bubble Sort"
+    algo_list = sa.AlgorithmList({
+        "Bubble Sort": sa.bubble_sort,
+        "Insertion Sort": sa.insertion_sort,
+        "Quick Sort": sa.quick_sort,
+        "Merge Sort": sa.merge_sort,
+    })
+
+    sorting_algo_name, sorting_algorithm = algo_list.get_current_algo()
     sorting_algorithm_generator = None
     fps = 60
     while run:
@@ -46,18 +52,10 @@ def main():
             elif event.key == pygame.K_SPACE and not sorting:
                 sorting = True
                 sorting_algorithm_generator = sorting_algorithm(draw_info, ascending)
-            elif event.key == pygame.K_i and not sorting:
-                sorting_algo_name = "Insertion Sort"
-                sorting_algorithm = sorting_algorithms.insertion_sort
-            elif event.key == pygame.K_b and not sorting:
-                sorting_algo_name = "Bubble Sort"
-                sorting_algorithm = sorting_algorithms.bubble_sort
-            elif event.key == pygame.K_m and not sorting:
-                sorting_algo_name = "Merge Sort"
-                sorting_algorithm = sorting_algorithms.merge_sort
-            elif event.key == pygame.K_q and not sorting:
-                sorting_algo_name = "Quick Sort"
-                sorting_algorithm = sorting_algorithms.quick_sort
+            elif event.key == pygame.K_s:
+                sorting_algo_name, sorting_algorithm = algo_list.back()
+            elif event.key == pygame.K_w:
+                sorting_algo_name, sorting_algorithm = algo_list.next()
             elif event.key == pygame.K_a and not sorting:
                 ascending = True
             elif event.key == pygame.K_d and not sorting:

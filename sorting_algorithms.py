@@ -1,9 +1,46 @@
 from DrawInformation import DrawInformation
 from utilities import draw_list
-from typing import List
+from typing import List, Dict, Callable, Generator
 
 
-def bubble_sort(draw_info: DrawInformation, ascending: bool):
+class AlgorithmList:
+    """
+    A class that contains all of the sorting algorithm
+    """
+    def __init__(self, algo_dict: Dict[str, Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]]):
+        self._list = []
+        for name, func_name in algo_dict.items():
+            self._list.append((name, func_name))
+        self._cur_pointer = 0
+
+    def next(self) -> (str, Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]):
+        """
+        Go to the next algorithm and return it
+        """
+        if self._cur_pointer < len(self._list) - 1:
+            self._cur_pointer += 1
+        else:
+            self._cur_pointer = 0
+        return self.get_current_algo()
+
+    def back(self) -> (str, Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]):
+        """
+        Move back to the previous algorithm and return it
+        """
+        if self._cur_pointer > 1:
+            self._cur_pointer -= 1
+        else:
+            self._cur_pointer = len(self._list) - 1
+        return self.get_current_algo()
+
+    def get_current_algo(self) -> (str, Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]):
+        """
+        Return the current algorithm
+        """
+        return self._list[self._cur_pointer]
+
+
+def bubble_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, None, List[int]]:
     """
 
     :param draw_info: DrawInformation object
@@ -19,9 +56,10 @@ def bubble_sort(draw_info: DrawInformation, ascending: bool):
                 array[j], array[j + 1] = array[j + 1], array[j]
                 draw_list(draw_info, {j: draw_info.GREEN, j + 1: draw_info.RED}, True)
                 yield True
+    return array
 
 
-def insertion_sort(draw_info: DrawInformation, ascending: bool):
+def insertion_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, None, List[int]]:
     """
 
     :param draw_info: DrawInformation object
@@ -45,9 +83,10 @@ def insertion_sort(draw_info: DrawInformation, ascending: bool):
             array[i] = current
             draw_list(draw_info, {i: draw_info.GREEN, i - 1: draw_info.RED}, True)
             yield True
+    return array
 
 
-def merge_sort(draw_info: DrawInformation, ascending: bool):
+def merge_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, None, List[int]]:
     """
 
     :param draw_info: DrawInformation object
@@ -106,9 +145,10 @@ def merge_sort(draw_info: DrawInformation, ascending: bool):
             for i in range(frm, to + 1):
                 array[i] = temp[i]
         m = 2 * m
+    return array
 
 
-def quick_sort(draw_info: DrawInformation, ascending: bool):
+def quick_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, None, List[int]]:
     """
 
     :param draw_info: DrawInformation object
@@ -168,3 +208,4 @@ def quick_sort(draw_info: DrawInformation, ascending: bool):
             stack[top] = p + 1
             top += 1
             stack[top] = high
+    return array
