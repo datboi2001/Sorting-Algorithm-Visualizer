@@ -1,7 +1,9 @@
-from DrawInformation import DrawInformation
 import random
+from typing import List, Tuple
+
 import pygame
-from typing import List
+
+from DrawInformation import DrawInformation
 
 
 def generate_starting_list(n: int, min_val: int, max_val: int) -> List[int]:
@@ -19,14 +21,23 @@ def generate_starting_list(n: int, min_val: int, max_val: int) -> List[int]:
     return array
 
 
-def blit_text(surface, text, pos, font, color=pygame.Color('white')):
+def blit_text(surface: pygame.Surface, text: str, pos: Tuple[int, int],
+              font: pygame.font.Font, color: pygame.Color = pygame.Color('white')) -> None:
+    """
+    :param surface: A pygame Surface object created in DrawInformation
+    :param text: A string of text to blit on the Surface
+    :param pos: tuple representing the starting position of the text
+    :param font: Pygame System font
+    :param color: pygame Color
+    :return: None, blit text on Surface
+    """
     words = [word.split(" ") for word in text.splitlines()]  # 2D array where each row is a list of words.
     space = font.size(' ')[0]  # The width of a space.
     max_width, max_height = surface.get_size()
     x, y = pos
     for line in words:
         for word in line:
-            word_surface = font.render(word, 0, color)
+            word_surface = font.render(word, False, color)
             word_width, word_height = word_surface.get_size()
             if x + word_width >= max_width:
                 x = pos[0]  # Reset the x.
@@ -55,9 +66,9 @@ def draw(draw_info: DrawInformation, algo_name: str, ascending: bool, fps: int) 
 
     text = "R: RESET | SPACE: START_SORTING | A: ASCENDING | D: DESCENDING |" \
            " Right arrow: Increase speed | Left arrow: Decrease speed |" \
-            " Up arrow: Increase size| Down arrow: Decrease size |" \
+           " Up arrow: Increase size| Down arrow: Decrease size |" \
            " W: Next Algorithm | S: Previous Algorithm"
-    blit_text(draw_info.window, text, (35, 55), draw_info.FONT)
+    blit_text(draw_info.window, text, (20, 55), draw_info.FONT)
     draw_list(draw_info)
     pygame.display.update()
 

@@ -1,7 +1,8 @@
+import math
+from typing import List, Tuple
+
 import pygame
 from pygame.font import SysFont
-from typing import List, Tuple
-import math
 
 
 class DrawInformation:
@@ -10,11 +11,11 @@ class DrawInformation:
     It contains attributes necessary for drawing the window
     """
     pygame.init()
-    BLACK: Tuple[int, int, int] = 0, 0, 0
-    WHITE: Tuple[int, int, int] = 255, 255, 255
-    GREEN: Tuple[int, int, int] = 0, 255, 0
-    RED: Tuple[int, int, int] = 255, 0, 0
-    BLUE: Tuple[int, int, int] = 0, 0, 255
+    BLACK: Tuple[int, int, int] = (0, 0, 0)
+    WHITE: Tuple[int, int, int] = (255, 255, 255)
+    GREEN: Tuple[int, int, int] = (0, 255, 0)
+    RED: Tuple[int, int, int] = (255, 0, 0)
+    BLUE: Tuple[int, int, int] = (0, 0, 255)
     BACKGROUND_COLOR: Tuple[int, int, int] = BLACK
     SIDE_PAD: int = 100
     TOP_PAD: int = 150
@@ -24,8 +25,8 @@ class DrawInformation:
         (160, 160, 160),
         (192, 192, 192)
     ]
-    FONT: SysFont = pygame.font.SysFont(None, 30)
-    LARGE_FONT: SysFont = pygame.font.SysFont(None, 40)
+    FONT: SysFont = pygame.font.SysFont("arial", 30)
+    LARGE_FONT: SysFont = pygame.font.SysFont("arial", 40)
 
     def __init__(self, width: int, height: int, array: List[int]):
         # Attributes will be set in set_list

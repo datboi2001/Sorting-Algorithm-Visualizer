@@ -1,16 +1,16 @@
+from typing import List, Callable, Generator, Tuple
+
 from DrawInformation import DrawInformation
 from utilities import draw_list
-from typing import List, Dict, Callable, Generator
 
 
 class AlgorithmList:
     """
-    A class that contains all of the sorting algorithm
+    A class that contains all of the sorting algorithms
     """
-    def __init__(self, algo_dict: Dict[str, Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]]):
-        self._list = []
-        for name, func_name in algo_dict.items():
-            self._list.append((name, func_name))
+    def __init__(self, algo_list: List[Tuple[str,
+                                             Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]]]):
+        self._list = algo_list
         self._cur_pointer = 0
 
     def next(self) -> (str, Callable[[DrawInformation, bool], Generator[bool, None, List[int]]]):
@@ -45,7 +45,7 @@ def bubble_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, 
 
     :param draw_info: DrawInformation object
     :param ascending: Boolean that indicates whether the algorithm is sorted ascending order or descending order
-    :return: None, mutates array on UI instead
+    :return: Sorted array in ascending order or descending order
     """
     array = draw_info.array
     for i in range(len(array) - 1):
@@ -64,7 +64,7 @@ def insertion_sort(draw_info: DrawInformation, ascending: bool) -> Generator[boo
 
     :param draw_info: DrawInformation object
     :param ascending: Boolean that indicates whether the algorithm is sorted ascending order or descending order
-    :return: None, mutates array on UI instead
+    :return: Sorted array in ascending order or descending order
     """
     array = draw_info.array
 
@@ -91,7 +91,7 @@ def merge_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, N
 
     :param draw_info: DrawInformation object
     :param ascending: Boolean that indicates whether the algorithm is sorted ascending order or descending order
-    :return: None, mutates array on UI instead
+    :return: Sorted array in ascending order or descending order
     """
 
     array = draw_info.array
@@ -144,7 +144,9 @@ def merge_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, N
 
             for i in range(frm, to + 1):
                 array[i] = temp[i]
-        m = 2 * m
+                draw_list(draw_info, {i: draw_info.BLUE}, True)
+                yield True
+        m *= 2
     return array
 
 
@@ -153,7 +155,7 @@ def quick_sort(draw_info: DrawInformation, ascending: bool) -> Generator[bool, N
 
     :param draw_info: DrawInformation object
     :param ascending: Boolean that indicates whether the algorithm is sorted ascending order or descending order
-    :return: None, mutates array on UI instead
+    :return: Sorted array in ascending order or descending order
     """
     array = draw_info.array
     high, low = len(array) - 1, 0

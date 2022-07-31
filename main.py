@@ -1,8 +1,9 @@
 import pygame
 
-from DrawInformation import DrawInformation
-from utilities import draw_list, draw, generate_starting_list
 import sorting_algorithms as sa
+from DrawInformation import DrawInformation
+from utilities import draw, generate_starting_list
+
 
 def main():
     """
@@ -20,12 +21,12 @@ def main():
     sorting = False
     ascending = True
 
-    algo_list = sa.AlgorithmList({
-        "Bubble Sort": sa.bubble_sort,
-        "Insertion Sort": sa.insertion_sort,
-        "Quick Sort": sa.quick_sort,
-        "Merge Sort": sa.merge_sort,
-    })
+    algo_list = sa.AlgorithmList([
+        ("Bubble Sort", sa.bubble_sort),
+        ("Insertion Sort", sa.insertion_sort),
+        ("Quick Sort", sa.quick_sort),
+        ("Merge Sort", sa.merge_sort),
+    ])
 
     sorting_algo_name, sorting_algorithm = algo_list.get_current_algo()
     sorting_algorithm_generator = None
